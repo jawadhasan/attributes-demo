@@ -38,6 +38,17 @@ foreach (Object attribute in attrib)
 }
 
 
+//demo-5
+var helpTextSever = AttributesHelper.GetInfoText(server);
+Console.WriteLine(helpTextSever);
+
+var helpTextServerPrperties = AttributesHelper.GetInfoTextProperties(server);
+foreach (var propHelpInfo in helpTextServerPrperties)
+{
+    Console.WriteLine(propHelpInfo);
+}
+
+
 
 //demo-1
 var attribs = typeof(Device)

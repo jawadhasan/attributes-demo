@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using AttributesPoc.DemoApp.Attributes;
+using AttributesPoc.DemoApp.Servers;
 using AttributesPoc.DemoApp.Vehicles;
 
 namespace AttributesPoc.DemoApp
@@ -45,5 +46,41 @@ namespace AttributesPoc.DemoApp
 
         }
 
+
+        public static string GetInfoText<T>(T value)
+        {
+            Type type = value.GetType();
+            var attribs = type.GetCustomAttributes(typeof(InfoAttribute), false);
+
+
+            if (attribs == null || attribs.Length == 0)
+                return string.Empty;
+
+            var attrib = (InfoAttribute)attribs[0];
+            return attrib.InfoText;
+
+        }
+
+
+        public static List<string> GetInfoTextProperties<T>(T value)
+        {
+            var results = new List<string>();
+            Type type = value.GetType();
+
+            // Loop through all properties
+            foreach (PropertyInfo p in type.GetProperties())
+            {
+                var attribs = p.GetCustomAttributes(typeof(InfoAttribute), false);
+
+                if (attribs == null || attribs.Length == 0) //if attribute is not applied, simply skip it
+                    break;
+
+               
+                var attrib = (InfoAttribute)attribs[0];
+                results.Add(attrib.InfoText);
+            }
+
+            return results;
+        }
     }
 }
