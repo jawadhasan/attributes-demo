@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.Text;
 using AttributesPoc.DemoApp.Attributes;
-using AttributesPoc.DemoApp.Servers;
 using AttributesPoc.DemoApp.Vehicles;
 
 namespace AttributesPoc.DemoApp
@@ -81,6 +81,28 @@ namespace AttributesPoc.DemoApp
             }
 
             return results;
+        }
+
+
+
+        public static string GetPropertyValueList(object inst)
+        {
+            Type type = inst.GetType();
+
+            //GetProperties
+            //BindingFlags enum describes which member of a type, we want. e.g. if not interested in private or static properties.
+            //DeclaredOnly Tells GetProperties() not to lookup base class properties (so if car class then not include id,licenseplate from base class vehicle).
+            PropertyInfo[] props = type.GetProperties(BindingFlags.Instance |
+                                                      BindingFlags.Public |
+                                                      BindingFlags.DeclaredOnly);
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo prop in props)
+            {
+                sb.AppendLine($"{prop.Name} {prop.GetValue(inst)}");
+            }
+
+            return sb.ToString();
         }
     }
 }
