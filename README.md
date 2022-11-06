@@ -1,6 +1,7 @@
 # Attributes Demo
 
-http://hexquote.com/
+## Article:
+https://hexquote.com/c-attributes-basics/
 
 
 
